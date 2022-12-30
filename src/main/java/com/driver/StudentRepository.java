@@ -27,16 +27,19 @@ public class StudentRepository {
     }
 
     public void createStudentTeacherPair(String student, String teacher) {
-        if(studentDB.containsKey(student) && teacherDB.containsKey(teacher)){
-            // create list of string
-            List<String> currentStudentsByTeacher =new ArrayList<>();
-            if(studentTeacherPairMap.containsKey(teacher))
-
-                currentStudentsByTeacher = studentTeacherPairMap.get(teacher);
-                currentStudentsByTeacher.add(student);
-
-            studentTeacherPairMap.put(teacher,currentStudentsByTeacher);
-        }
+//        if(studentDB.containsKey(student) && teacherDB.containsKey(teacher)){
+//            // create list of string
+//            List<String> currentStudentsByTeacher =new ArrayList<>();
+//            if(studentTeacherPairMap.containsKey(teacher))
+//
+//                currentStudentsByTeacher = studentTeacherPairMap.get(teacher);
+//                currentStudentsByTeacher.add(student);
+//
+//            studentTeacherPairMap.put(teacher,currentStudentsByTeacher);
+//        }
+        List<String> studentList = studentTeacherPairMap.getOrDefault(teacher,new ArrayList<>());
+        studentList.add(student);
+        studentTeacherPairMap.put(teacher,studentList);
     }
 
     public Student findStudent(String name) {
@@ -80,9 +83,9 @@ public class StudentRepository {
             //Delete the pairs
             studentTeacherPairMap.remove(teacher);
             //Delete the teacher
-            if(teacherDB.containsKey(teacher)){
-                teacherDB.remove(teacher);
-            }
+//            if(teacherDB.containsKey(teacher)){
+//                teacherDB.remove(teacher);
+//            }
         }
     }
 
