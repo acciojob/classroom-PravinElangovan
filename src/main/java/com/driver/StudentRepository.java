@@ -30,11 +30,11 @@ public class StudentRepository {
         if(studentDB.containsKey(student) && teacherDB.containsKey(teacher)){
             // create list of string
             List<String> currentStudentsByTeacher =new ArrayList<>();
-            if(studentTeacherPairMap.containsKey(teacher)) {
+            if(studentTeacherPairMap.containsKey(teacher))
 
                 currentStudentsByTeacher = studentTeacherPairMap.get(teacher);
                 currentStudentsByTeacher.add(student);
-            }
+
             studentTeacherPairMap.put(teacher,currentStudentsByTeacher);
         }
     }
