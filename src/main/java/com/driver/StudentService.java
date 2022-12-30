@@ -40,10 +40,10 @@ public class StudentService {
     }
 
     public void deleteTeacherByName(String teacher) {
-        studentRepository.deleteTeacher(teacher);
+        studentRepository.deleteTeacherByNameFromDb(teacher);
     }
 
     public void deleteAllTeachers() {
-        studentRepository.deleAllTeachers();
+        studentRepository.deleteAllTeachersFromDb();
     }
 }

@@ -8,9 +8,9 @@ import java.util.*;
 @Repository
 public class StudentRepository {
 
-    private HashMap<String,Student> studentDB;
-    private HashMap<String,Teacher> teacherDB;
-    private HashMap<String, List<String>> studentTeacherPairMap ;
+    private static HashMap<String,Student> studentDB;
+    private static HashMap<String,Teacher> teacherDB;
+    private static HashMap<String, List<String>> studentTeacherPairMap ;
 
     public StudentRepository() {
         this.studentDB = new HashMap<String,Student>();
@@ -70,40 +70,39 @@ public class StudentRepository {
     }
 
 
-    public void deleteTeacher(String teacher) {
+    public static void deleteTeacherByNameFromDb(String teacherName){
         List<String> students=new ArrayList<>();
-        //Delete students
-        if(studentTeacherPairMap.containsKey(teacher)){
-            students=studentTeacherPairMap.get(teacher);
+        if(studentTeacherPairMap.containsKey(teacherName)) {
+            students=studentTeacherPairMap.get(teacherName);
+
             for(String student: students){
                 if(studentDB.containsKey(student)){
                     studentDB.remove(student);
                 }
             }
-            //Delete the pairs
-            studentTeacherPairMap.remove(teacher);
-            //Delete the teacher
-//            if(teacherDB.containsKey(teacher)){
-//                teacherDB.remove(teacher);
-//            }
+            studentTeacherPairMap.remove(teacherName);
+        }
+        if(teacherDB.containsKey(teacherName)){
+            teacherDB.remove(teacherName);
         }
     }
 
-    public void deleAllTeachers() {
-        HashSet<String>studentSet= new HashSet<>();
-        teacherDB =new HashMap<>();
-        for(String teacher: studentTeacherPairMap.keySet()){
-            for(String student : studentSet){
-                studentSet.add(student);
-            }
-        }
-        for(String student: studentSet ){
-            if(studentDB.containsKey(student)) {
-                studentDB.remove(student);
-            }
-        }
 
-        //clearing the pair
-        studentTeacherPairMap= new HashMap<>();
+    //Delete all teachers from database
+    public static void deleteAllTeachersFromDb(){
+
+        teacherDB=new HashMap<>();
+        for(String teacher: studentTeacherPairMap.keySet()){
+            List<String> students=new ArrayList<>();
+            for(String studentName: studentTeacherPairMap.get(teacher)) {
+                students.add(studentName);
+            }
+            for(String name: students){
+                if(studentDB.containsKey(name)){
+                    studentDB.remove(name);
+                }
+            }
+        }
+        studentTeacherPairMap=new HashMap<>();
     }
 }
